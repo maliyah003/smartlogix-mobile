@@ -1,0 +1,32 @@
+services:
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+  smartlogixbackend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "5003:5003"
+    environment:
+      - PORT=5003
+      - MONGODB_URI=mongodb://mongodb:27017/smartlogix
+      - NODE_ENV=production
+    depends_on:
+      - mongodb
+
+  smartlogixfrontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    depends_on:
+      - smartlogixbackend
+
+volumes:
+  mongodb_data:
