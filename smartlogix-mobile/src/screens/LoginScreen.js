@@ -19,6 +19,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { authAPI } from '../services/api';
 import { Colors, Fonts, Shadows } from '../theme/ui';
 import PageLoading from '../components/PageLoading';
+import TrackShipmentPanel from '../components/TrackShipmentPanel';
 
 export default function LoginScreen({ navigation }) {
     const [step, setStep] = useState(1);
@@ -29,12 +30,19 @@ export default function LoginScreen({ navigation }) {
     const [isNewDriver, setIsNewDriver] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [showTrackingPanel, setShowTrackingPanel] = useState(false);
 
-    const getEmail = () => `${username.trim().toLowerCase()}@smartlogix.com`;
+    const getEmail = () => {
+        const value = username.trim().toLowerCase();
+        if (!value) return '';
+        // Accept both full email and username inputs
+        if (value.includes('@')) return value;
+        return `${value}@smartlogix.com`;
+    };
 
     const handleNext = async () => {
         if (!username.trim()) {
-            Alert.alert('Error', 'Please enter your username');
+            Alert.alert('Error', 'Please enter your username or email');
             return;
         }
 
@@ -126,14 +134,14 @@ export default function LoginScreen({ navigation }) {
                         {step === 1 ? (
                             <>
                                 <View style={styles.inputGroup}>
-                                    <Text style={styles.label}>Username</Text>
+                                    <Text style={styles.label}>Username or Email</Text>
                                     <View style={styles.inputWrapper}>
                                         <View style={styles.prefixIcon}>
                                             <Ionicons name="person-outline" size={18} color={Colors.brandOrange} />
                                         </View>
                                         <TextInput
                                             style={styles.input}
-                                            placeholder="Your username"
+                                            placeholder="Enter username or email"
                                             placeholderTextColor={Colors.textTertiary}
                                             value={username}
                                             onChangeText={setUsername}
@@ -141,7 +149,9 @@ export default function LoginScreen({ navigation }) {
                                             autoCorrect={false}
                                             editable={!loading}
                                         />
-                                        <Text style={styles.emailSuffix}>@smartlogix.com</Text>
+                                        {!username.includes('@') ? (
+                                            <Text style={styles.emailSuffix}>@smartlogix.com</Text>
+                                        ) : null}
                                     </View>
                                 </View>
 
@@ -156,6 +166,22 @@ export default function LoginScreen({ navigation }) {
                                         <Text style={styles.primaryButtonText}>Next</Text>
                                     )}
                                 </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.trackButton}
+                                    onPress={() => setShowTrackingPanel((current) => !current)}
+                                >
+                                    <Ionicons name="search" size={18} color={Colors.brandOrange} />
+                                    <Text style={styles.trackButtonText}>
+                                        {showTrackingPanel ? 'Hide shipment tracker' : 'Track your shipment'}
+                                    </Text>
+                                </TouchableOpacity>
+
+                                {showTrackingPanel ? (
+                                    <TrackShipmentPanel
+                                        onTrack={(jobId) => navigation.navigate('TrackingDetails', { jobId })}
+                                    />
+                                ) : null}
                             </>
                         ) : (
                             <>
@@ -244,6 +270,22 @@ export default function LoginScreen({ navigation }) {
                                         </Text>
                                     )}
                                 </TouchableOpacity>
+
+                                <TouchableOpacity
+                                    style={styles.trackButton}
+                                    onPress={() => setShowTrackingPanel((current) => !current)}
+                                >
+                                    <Ionicons name="search" size={18} color={Colors.brandOrange} />
+                                    <Text style={styles.trackButtonText}>
+                                        {showTrackingPanel ? 'Hide shipment tracker' : 'Track your shipment'}
+                                    </Text>
+                                </TouchableOpacity>
+
+                                {showTrackingPanel ? (
+                                    <TrackShipmentPanel
+                                        onTrack={(jobId) => navigation.navigate('TrackingDetails', { jobId })}
+                                    />
+                                ) : null}
                             </>
                         )}
                     </View>
@@ -398,5 +440,26 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontFamily: Fonts.bold,
         color: '#FFFFFF',
+    },
+    trackButton: {
+        marginTop: 16,
+        borderRadius: 16,
+        minHeight: 56,
+        borderWidth: 1,
+        borderColor: '#F7C98F',
+        backgroundColor: '#FFF8F0',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
+        paddingHorizontal: 18,
+    },
+    trackButtonText: {
+        fontSize: 16,
+        fontFamily: Fonts.bold,
+        color: Colors.brandOrange,
+    },
+    trackPanelWrap: {
+        marginTop: 16,
     }
 });
