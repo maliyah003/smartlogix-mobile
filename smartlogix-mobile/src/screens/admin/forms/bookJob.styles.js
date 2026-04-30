@@ -1,0 +1,86 @@
+import { StyleSheet } from 'react-native';
+import { Colors, Fonts } from '../../../theme/ui';
+
+export const styles = StyleSheet.create({
+    keyboardView: { flex: 1 },
+    scrollContent: { paddingHorizontal: 16, paddingTop: 16, paddingBottom: 60 },
+    header: { marginBottom: 16 },
+    title: { fontSize: 24, fontFamily: Fonts.bold, color: Colors.textPrimary, marginBottom: 4 },
+    subtitle: { fontSize: 13, fontFamily: Fonts.medium, color: Colors.textSecondary },
+    stepIndicatorContainer: { marginBottom: 20, alignItems: 'center' },
+    mainStepCirclesRow: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginBottom: 12,
+    },
+    mainStepCircleWrap: {
+        alignItems: 'center',
+        width: 82,
+    },
+    mainStepConnectorDashed: {
+        flex: 1,
+        borderTopWidth: 1.5,
+        borderTopColor: '#D1D5DB',
+        borderStyle: 'dashed',
+        marginTop: 34,
+        marginHorizontal: 6,
+    },
+    mainStepConnectorCompleted: {
+        borderTopColor: Colors.brandOrange,
+    },
+    circularProgressOuter: {
+        width: 62,
+        height: 62,
+        borderRadius: 31,
+        borderWidth: 4,
+        borderColor: Colors.brandOrange,
+        backgroundColor: '#FFF8F0',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    circularProgressOuterActive: {
+        borderColor: Colors.brandOrange,
+        backgroundColor: '#FFF8F0',
+    },
+    circularProgressOuterCompleted: {
+        borderColor: Colors.success,
+        backgroundColor: '#ECFDF5',
+    },
+    circularProgressInner: {
+        width: 44,
+        height: 44,
+        borderRadius: 22,
+        backgroundColor: Colors.surface,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    mainStepCircleLabel: {
+        marginTop: 6,
+        fontSize: 11,
+        fontFamily: Fonts.medium,
+        color: Colors.textSecondary,
+        textAlign: 'center',
+    },
+    mainStepCircleLabelActive: {
+        color: Colors.brandOrange,
+        fontFamily: Fonts.bold,
+    },
+    circularProgressStep: {
+        fontSize: 20,
+        fontFamily: Fonts.bold,
+        color: Colors.brandOrange,
+    },
+    errorBox: { backgroundColor: '#FEE2E2', borderRadius: 10, padding: 12, marginBottom: 12, flexDirection: 'row', alignItems: 'flex-start', gap: 10 },
+    errorText: { fontSize: 12, fontFamily: Fonts.medium, color: Colors.danger, flex: 1, marginTop: 2 },
+    stepContent: { marginBottom: 20, backgroundColor: Colors.surface, borderRadius: 14, padding: 14 },
+    navigationBox: { flexDirection: 'row', gap: 10, justifyContent: 'space-between' },
+    prevButton: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderRadius: 10, borderWidth: 2, borderColor: Colors.brandOrange, paddingVertical: 12 },
+    prevButtonText: { fontSize: 14, fontFamily: Fonts.bold, color: Colors.brandOrange },
+    nextButton: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, backgroundColor: Colors.brandOrange, borderRadius: 10, paddingVertical: 12 },
+    nextButtonText: { fontSize: 14, fontFamily: Fonts.bold, color: '#fff' },
+    submitButton: { flex: 1, backgroundColor: Colors.success, borderRadius: 10, paddingVertical: 12, alignItems: 'center', justifyContent: 'center' },
+    submitButtonText: { fontSize: 14, fontFamily: Fonts.bold, color: '#fff' },
+    buttonDisabled: { opacity: 0.5 },
+    spacer: { height: 20 },
+});
